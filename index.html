@@ -6,6 +6,116 @@
   <meta name="p:domain_verify" content="1ec37f648cc9edbfbd83f1492b63ad33"/>
   <title>My Website</title>
   <link rel="stylesheet" href="style.css">
+  <style>
+    /* Add a dynamic background */
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(45deg, #ff7e5f, #feb47b);
+      color: #333;
+      text-align: center;
+      transition: background 0.5s ease-in-out;
+    }
+
+    header {
+      padding: 20px;
+      background: rgba(0, 0, 0, 0.5);
+      color: white;
+    }
+
+    header h1 {
+      font-size: 2.5em;
+      margin: 0;
+    }
+
+    nav a {
+      color: #ffcccb;
+      text-decoration: none;
+      padding: 0 10px;
+      transition: color 0.3s;
+    }
+
+    nav a:hover {
+      color: #fff;
+    }
+
+    #darkModeToggle {
+      margin-top: 10px;
+      padding: 10px 20px;
+      background: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    #darkModeToggle:hover {
+      background: #45a049;
+    }
+
+    main {
+      padding: 20px;
+    }
+
+    section {
+      margin: 20px 0;
+      padding: 20px;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    footer {
+      padding: 10px;
+      background: rgba(0, 0, 0, 0.7);
+      color: white;
+    }
+
+    /* Fade-in animation for sections */
+    section {
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 1s ease-in-out forwards;
+    }
+
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Dynamic dark mode styling */
+    .dark-mode {
+      background: #2c2c2c;
+      color: #ddd;
+    }
+
+    .dark-mode header {
+      background: #444;
+    }
+
+    .dark-mode footer {
+      background: #444;
+    }
+
+    .dark-mode nav a {
+      color: #a8a8a8;
+    }
+
+    .dark-mode nav a:hover {
+      color: #fff;
+    }
+
+    .dark-mode #darkModeToggle {
+      background: #666;
+    }
+
+    .dark-mode #darkModeToggle:hover {
+      background: #555;
+    }
+  </style>
 </head>
 <body>
   <header>
@@ -42,12 +152,15 @@
     <p>&copy; 2023 My Website</p>
   </footer>
 
-  <!-- Add your script here -->
   <script src="rss-feed.js"></script>
   <script src="script.js"></script>
+  <script>
+    // Dark mode toggle functionality
+    const darkModeToggle = document.getElementById('darkModeToggle');
+
+    darkModeToggle.addEventListener('click', () => {
+      document.body.classList.toggle('dark-mode');
+    });
+  </script>
 </body>
 </html>
-
-<! -- test comment-->
-<! -- test comment2-->
-<! -- test comment3-->
