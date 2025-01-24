@@ -6,6 +6,32 @@
   <meta name="p:domain_verify" content="1ec37f648cc9edbfbd83f1492b63ad33"/>
   <title>My Website</title>
   <link rel="stylesheet" href="style.css">
+  <style>
+    /* Inline styles for product display */
+    .product {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 30px;
+    }
+    .product img {
+      max-width: 300px;
+      height: auto;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      padding: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+    .product a {
+      margin-top: 10px;
+      text-decoration: none;
+      color: #007bff;
+      font-size: 16px;
+    }
+    .product a:hover {
+      text-decoration: underline;
+    }
+  </style>
   <script>
       // Redirect logic
       const urlParams = new URLSearchParams(window.location.search);
@@ -38,11 +64,11 @@
     </section>
 
     <section>
-      <h2>Latest Articles</h2>
-      <p>Below are the latest articles from my RSS feed:</p>
-      <ul id="rss-feed">
+      <h2>Latest Products</h2>
+      <p>Below are the latest products from my RSS feed:</p>
+      <div id="product-container">
         <!-- RSS feed items will be dynamically added here -->
-      </ul>
+      </div>
     </section>
   </main>
 
@@ -51,7 +77,53 @@
   </footer>
 
   <!-- Add your script here -->
-  <script src="rss-feed.js"></script>
+  <script>
+    // Function to fetch and display RSS feed
+    async function loadRSSFeed() {
+      const feedUrl = './scraped_feed.xml'; // Adjust path if needed
+      const container = document.getElementById('product-container');
+
+      try {
+        const response = await fetch(feedUrl);
+        const feedText = await response.text();
+
+        // Parse RSS feed
+        const parser = new DOMParser();
+        const rss = parser.parseFromString(feedText, "application/xml");
+        const items = rss.querySelectorAll('item');
+
+        // Display each product
+        items.forEach(item => {
+          const title = item.querySelector('title').textContent;
+          const link = item.querySelector('link').textContent;
+          const image = item.querySelector('enclosure').getAttribute('url');
+
+          // Create product HTML
+          const productDiv = document.createElement('div');
+          productDiv.className = 'product';
+
+          const imgElement = document.createElement('img');
+          imgElement.src = image;
+          imgElement.alt = title;
+
+          const linkElement = document.createElement('a');
+          linkElement.href = link;
+          linkElement.textContent = title;
+          linkElement.target = '_blank'; // Open in new tab
+
+          // Append to container
+          productDiv.appendChild(imgElement);
+          productDiv.appendChild(linkElement);
+          container.appendChild(productDiv);
+        });
+      } catch (error) {
+        console.error('Error loading RSS feed:', error);
+      }
+    }
+
+    // Load the feed on page load
+    loadRSSFeed();
+  </script>
   <script src="script.js"></script>
 </body>
 </html>
